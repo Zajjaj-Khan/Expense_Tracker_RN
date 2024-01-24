@@ -1,14 +1,31 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from "react-native";
+import React, { useLayoutEffect } from "react";
+import { GlobalStyles } from "../constants/styles";
+import IconButton  from "../components/Ui/IconButton";
+const ManageExpense = ({ route, navigation }) => {
+  const editedExpenseID = route.params?.expenseId;
 
-const ManageExpense = () => {
+  const isEditing = !!editedExpenseID;
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: isEditing ? "Edit Expense" : "Add Expense",
+    });
+  }, [navigation, isEditing]);
+  function deleteExpenseHandler() {}
   return (
     <View>
-      <Text>ManageExpense</Text>
+      {isEditing && (
+        <IconButton
+          icon="trash"
+          color={GlobalStyles.colors.error500}
+          size={36}
+          onPress={deleteExpenseHandler}
+        />
+      )}
     </View>
-  )
-}
+  );
+};
 
-export default ManageExpense
+export default ManageExpense;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
